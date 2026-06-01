@@ -34,6 +34,8 @@ bash checkpoints_download.sh
 
 ## Quick start
 
+Shell wrappers that run each pipeline with default settings are provided in `examples/`.
+
 ### Inverse problems
 
 ```bash
@@ -60,6 +62,8 @@ rescales each per-iteration gradient to the velocity norm.
 
 ### Reward-guided generation
 
+Aesthetic generation with FMRG-J on a list of free-form prompts:
+
 ```bash
 python scripts/generate_aesthetic.py --mode guided \
     --prompts_file data/artistic_prompts.txt \
@@ -68,6 +72,8 @@ python scripts/generate_aesthetic.py --mode guided \
     --nfe 13 --early_stop 5 --warmup_steps 2 --warmup_particles 3 \
     --step_size 3.0 --unguided_steps 2 --sample_mode flow_map1
 ```
+
+Compositional generation on the GenEval prompt set (uses gradient checkpointing for 512-res):
 
 ```bash
 python scripts/generate_geneval.py \
@@ -78,6 +84,8 @@ python scripts/generate_geneval.py \
     --prompts_file data/geneval_prompts/evaluation_metadata.jsonl \
     --output_dir ./results/geneval --start_idx 0 --end_idx 1 --num_samples 1
 ```
+
+Best-of-N reward-rerank baseline (unguided sampling + reward-ensemble selection):
 
 ```bash
 python scripts/best_of_n.py \
@@ -97,7 +105,7 @@ python scripts/aggregate_metrics.py --save_dir ./results/sr --gt_path /path/to/g
 ## Key flags
 
 - `--method {fmrg, flowdps, flowchef}` — guidance algorithm (inverse problems).
-- `--grad_mode {jac, euc}` — FMRG-J (Jacobian-coupled) vs FMRG-E (Euclidean).
+- `--grad_mode {jac, euc}` — FMRG-J (Jacobian-coupled) vs FMRG-E (Euclidean). FMRG-E tends to be more effective for measurement losses (inverse problems); FMRG-J tends to be more effective for neural-network rewards.
 - `--normalize_grad` — rescale each gradient to the velocity norm.
 - `--sample_mode {flow_map1, flow_map2, flow_matching}` — 1-NFE flow-map step, 2-NFE flow-map step, or 1-NFE Euler step (baselines).
 - `--loss_mode {pixel, latent}` — measurement-loss space.
