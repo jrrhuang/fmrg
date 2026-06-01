@@ -26,7 +26,7 @@ python scripts/best_of_n.py \
     --n "$N" \
     --resolution 512 \
     --num_steps 8 \
-    --seed_base 0 \
+    --seed 0 \
     --start_idx "$START_IDX" \
     --end_idx "$END_IDX"
 
