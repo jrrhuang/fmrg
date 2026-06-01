@@ -94,6 +94,18 @@ Dataset-level PSNR / SSIM / LPIPS / FID / KID over an inverse-problem run:
 python scripts/aggregate_metrics.py --save_dir ./results/sr --gt_path /path/to/gt_dir
 ```
 
+## Key flags
+
+- `--method {fmrg, flowdps, flowchef}` — guidance algorithm (inverse problems).
+- `--grad_mode {jac, euc}` — FMRG-J (Jacobian-coupled) vs FMRG-E (Euclidean).
+- `--normalize_grad` — rescale each gradient to the velocity norm.
+- `--sample_mode {flow_map1, flow_map2, flow_matching}` — 1-NFE flow-map step, 2-NFE flow-map step, or 1-NFE Euler step (baselines).
+- `--loss_mode {pixel, latent}` — measurement-loss space.
+- `--resolution {256, 512}` — auto-selects the matching LoRA.
+- `--early_stop` — last guided step before the trailing unguided tail.
+- `--warmup_steps` / `--warmup_particles` — reinitialization steps and particles per step.
+- `--unguided_steps` — trailing uncontrolled flow-map steps to t=0.
+
 ## Project structure
 
 ```
@@ -132,7 +144,3 @@ fmrg/
 ## Acknowledgments
 
 This repository builds on the codebase of [FlowDPS](https://github.com/FlowDPS-Inverse/FlowDPS).
-
-## License
-
-Apache 2.0. See `LICENSE`.
