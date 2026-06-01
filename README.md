@@ -41,12 +41,16 @@ It also pre-warms the reward-model caches under `$HF_HOME`.
 
 ## Quick start
 
+For one-command runs with defaults filled in, see `examples/` (e.g.
+`bash examples/aesthetic.sh`). The commands below show the underlying
+Python entry points.
+
 ### Inverse problems
 
 ```bash
 python scripts/solve_inverse_problem.py \
     --task_config configs/inverse_problems/sr_config.yaml \
-    --image_path /path/to/image.png \
+    --image_path data/inverse_examples/corgi.png \
     --method fmrg --grad_mode jac --normalize_grad \
     --num_steps 30 --step_size 5.0 --num_optim_iters 1 \
     --sample_mode flow_map1 --loss_mode pixel \
@@ -100,22 +104,6 @@ Dataset-level PSNR / SSIM / LPIPS / FID / KID over an inverse-problem run:
 ```bash
 python scripts/aggregate_metrics.py --save_dir ./results/sr --gt_path /path/to/gt_dir
 ```
-
-### One-command examples
-
-`examples/` contains a shell wrapper per pipeline that calls the corresponding
-script with default hyperparameters on a single input. Each runs in ~3–8 min
-on one L40S.
-
-```bash
-bash examples/inverse_problems.sh
-bash examples/aesthetic.sh
-bash examples/geneval.sh
-bash examples/best_of_n.sh
-```
-
-Override `OUTPUT_DIR`, `END_IDX`, `PROMPTS_FILE`, `IMAGE_PATH`, etc. via
-environment variables.
 
 ## Project structure
 
