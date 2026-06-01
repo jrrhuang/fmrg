@@ -19,13 +19,6 @@ ports of the FlowDPS and FlowChef baselines (`--method {flowdps, flowchef}`).
 
 ## Installation
 
-### Requirements
-
-- Python 3.11
-- CUDA-capable GPU
-
-### Setup
-
 ```bash
 git clone https://github.com/jrrhuang/fmrg.git
 cd fmrg
