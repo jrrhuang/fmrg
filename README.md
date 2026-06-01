@@ -32,8 +32,6 @@ bash checkpoints_download.sh
 - `flux-flowmap-lora/` (256-res) — used by inverse problems.
 - `flux-flowmap-lora-512/` (512-res) — used by reward-guided generation.
 
-It also pre-warms the reward-model caches under `$HF_HOME`.
-
 ## Quick start
 
 ### Inverse problems
