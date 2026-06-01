@@ -8,7 +8,7 @@ Usage:
     python scripts/best_of_n.py \\
         --prompts_file data/artistic_prompts.txt \\
         --output_dir ./results/best_of_n \\
-        --n 8 --resolution 512 --seed_base 0
+        --n 8 --resolution 512 --seed 0
 """
 
 import argparse
@@ -56,8 +56,8 @@ def main():
     parser.add_argument("--num_steps", type=int, default=8,
                         help="Unguided flow-map steps per sample")
     parser.add_argument("--guidance_scale", type=float, default=3.5)
-    parser.add_argument("--seed_base", type=int, default=0,
-                        help="First seed; sample i uses seed_base + i")
+    parser.add_argument("--seed", type=int, default=0,
+                        help="First seed; sample i uses seed + i")
     parser.add_argument("--save_all", action="store_true",
                         help="Also save every candidate (not just the winner)")
 
@@ -114,7 +114,7 @@ def main():
         # Generate N candidates
         candidates = []  # list of (seed, image_tensor_neg1_to_1)
         for i in range(args.n):
-            seed = args.seed_base + i
+            seed = args.seed + i
             with torch.no_grad():
                 pil = sampler.sample_forward(
                     num_steps=args.num_steps,

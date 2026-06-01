@@ -24,7 +24,7 @@ python scripts/generate_aesthetic.py \
     --prompts_file "$PROMPTS_FILE" \
     --output_dir "$OUTPUT_DIR" \
     --resolution 512 \
-    --seeds 0 \
+    --seed 0 --num_seeds 1 \
     --start_idx "$START_IDX" \
     --end_idx "$END_IDX" \
     --num_steps 16 \

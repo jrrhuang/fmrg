@@ -44,7 +44,10 @@ def main():
     parser.add_argument("--mode", type=str, choices=["unguided", "guided"], required=True,
                         help="unguided = plain flow-map sampling. guided = FMRG-J with reward ensemble.")
     parser.add_argument("--resolution", type=int, default=512)
-    parser.add_argument("--seeds", type=int, nargs="+", default=[0, 100, 200, 300])
+    parser.add_argument("--seed", type=int, default=0,
+                        help="First seed; sample i uses seed + i.")
+    parser.add_argument("--num_seeds", type=int, default=1,
+                        help="Number of consecutive seeds to generate per prompt.")
     parser.add_argument("--unguided_steps_fm", type=int, default=8,
                         help="Flow-map steps when --mode unguided.")
     parser.add_argument("--start_idx", type=int, default=0)
@@ -117,7 +120,7 @@ def main():
         with open(os.path.join(prompt_dir, "prompt.txt"), "w") as f:
             f.write(prompt)
 
-        for seed in args.seeds:
+        for seed in range(args.seed, args.seed + args.num_seeds):
             img_path = os.path.join(prompt_dir, f"seed_{seed:04d}.png")
             if os.path.exists(img_path) and os.path.getsize(img_path) > 0:
                 print(f"  seed {seed}: exists, skipping")

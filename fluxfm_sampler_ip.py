@@ -100,7 +100,7 @@ class FluxFlowMapSampler:
 
         print(f"FLUX FlowMap loaded successfully (memory-efficient mode)")
 
-    def set_prompt(self, prompt: str):
+    def set_prompt_embeddings(self, prompt: str):
         """Switch the active prompt embeddings (for class-conditional generation)."""
         if prompt in self.prompt_embeddings:
             self.cached_prompt_embeds, self.cached_pooled_prompt_embeds = self.prompt_embeddings[prompt]
@@ -433,7 +433,7 @@ class FluxFlowMapSampler:
                                loss_mode: str = "latent",
                                loss_func: str = "sum",
                                normalize_grad: bool = False,
-                               early_stop: bool = False,
+                               early_stop: int = 0,
                                enable_callback: bool = True) -> torch.Tensor:
         """
         FLUX FlowMap FMRG sampling for inverse problems.
@@ -459,8 +459,8 @@ class FluxFlowMapSampler:
             loss_func: Reduction over the residual ("sum" or "norm").
             normalize_grad: Rescale the per-iteration gradient to the velocity norm
                .
-            early_stop: If True, apply guidance for 2/3 of the schedule then complete
-                with one uncontrolled flow-map step to t=0.
+            early_stop: Number of leading guided steps; 0 disables (full schedule).
+                When > 0, completes with one uncontrolled flow-map step to t=0.
             enable_callback: Enable per-step callback (slower; decodes each step).
         """
         imgH, imgW = img_shape if img_shape is not None else (256, 256)
@@ -508,8 +508,8 @@ class FluxFlowMapSampler:
         )
         time_steps = torch.cat([timesteps / 1000.0, torch.zeros(1, device=device)])
 
-        if early_stop:
-            n_keep_end = 2 * num_steps // 3
+        if early_stop > 0:
+            n_keep_end = early_stop
             schedule_slice = time_steps[:n_keep_end]
             time_steps = torch.cat([schedule_slice, torch.zeros(1, device=device)])
             actual_steps = n_keep_end

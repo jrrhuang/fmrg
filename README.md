@@ -67,7 +67,7 @@ Aesthetic generation with FMRG-J on a list of free-form prompts:
 ```bash
 python scripts/generate_aesthetic.py --mode guided \
     --prompts_file data/artistic_prompts.txt \
-    --output_dir ./results/aesthetic --resolution 512 --seeds 0 \
+    --output_dir ./results/aesthetic --resolution 512 --seed 0 --num_seeds 1 \
     --start_idx 0 --end_idx 1 \
     --num_steps 16 --early_stop 4 --warmup_steps 0 --warmup_particles 1 \
     --step_size 3.0 --unguided_steps 2 --sample_mode flow_map1

@@ -146,7 +146,7 @@ def main():
                         help='Inner gradient steps n_opt per interval')
     parser.add_argument('--seed', type=int, default=0, help='Random seed')
     parser.add_argument('--early_stop', type=int, default=0,
-                        help='Early stopping (0=off, 1=on). When on, applies guidance for 2/3 of steps then completes via one uncontrolled flow-map step to t=0 (2/3-then-jump-to-0).')
+                        help='Number of leading guided steps; 0 disables (full schedule). When > 0, completes with one uncontrolled flow-map step to t=0.')
 
     parser.add_argument('--method', type=str, default='fmrg', choices=['fmrg', 'flowdps', 'flowchef'],
                         help='Sampling method: fmrg (Flow Map Reward Guidance, ours), flowdps (FlowDPS baseline), flowchef (FlowChef baseline)')
