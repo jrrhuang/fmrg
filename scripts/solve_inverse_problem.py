@@ -88,10 +88,7 @@ def load_yaml(path: str) -> dict:
 
 
 def compute_metrics(recon_path: str, label_path: str, device: str = 'cuda') -> dict:
-    """
-    Compute PSNR, SSIM, and LPIPS between reconstruction and ground truth.
-    Matches FlowDPS eval.py computation exactly.
-    """
+    """Compute PSNR, SSIM, and LPIPS between reconstruction and ground truth."""
     from skimage.metrics import peak_signal_noise_ratio as psnr
     from pytorch_msssim import ssim
     import lpips
@@ -174,7 +171,7 @@ def main():
     parser.add_argument('--prompt', type=str, default='',
                         help='Text prompt (used for all images unless --prompts_file is set)')
     parser.add_argument('--prompts_file', type=str, default=None,
-                        help='Path to prompts.json mapping image filenames to per-image prompts (for class-conditional)')
+                        help='Path to prompts.json mapping image filenames to per-image prompts')
     parser.add_argument('--lora_path', type=str, default=None,
                         help='Path to FlowMap LoRA (auto-selected based on resolution if not specified)')
     parser.add_argument('--model_id', type=str, default=DEFAULT_MODEL_ID,

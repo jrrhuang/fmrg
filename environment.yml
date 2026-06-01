@@ -58,7 +58,7 @@ dependencies:
       - scikit-image
       - pytorch-msssim
 
-      # Reward backends (Section 5.3) are installed by install.sh with
+      # Reward backends are installed by install.sh with
       # --no-build-isolation. Their setup.py modules `import pkg_resources`,
       # which has been removed from setuptools 71+; pip's isolated build env
       # always grabs the latest setuptools, so they have to bypass it.

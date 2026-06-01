@@ -22,10 +22,7 @@ from PIL import Image
 # CONFIGURABLE PATHS - Modify these for your setup
 # =============================================================================
 
-# Directory containing this script (reward/style/)
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-# Parent reward/ directory (where symlinks live)
-REWARD_ROOT = os.path.dirname(SCRIPT_DIR)
 
 # HuggingFace cache directory (for downloading FLUX.1-dev model)
 # Set to your preferred cache location, or use environment variable
@@ -458,22 +455,9 @@ class FluxFlowMapSampler:
                 grad = grad / (grad_norm + 1e-8)
                 if velocity_norm is not None:
                     grad = grad * velocity_norm
-                zt = (zt - stepsize * grad).detach().requires_grad_(True)
-            elif grad_norm_mode == "clip" and velocity_norm is not None:
-                norm_cap = 8.0
-                scaled_grad = stepsize * grad
-                clip_threshold = norm_cap * velocity_norm
-                grad_norm = torch.linalg.vector_norm(scaled_grad, dim=(1, 2, 3), keepdim=True)
-                factor = torch.clamp(clip_threshold / (grad_norm + 1e-8), max=1.0)
-                scaled_grad = scaled_grad * factor
-                zt = (zt - scaled_grad).detach().requires_grad_(True)
-            else:
-                zt = (zt - stepsize * grad).detach().requires_grad_(True)
+            zt = (zt - stepsize * grad).detach().requires_grad_(True)
 
-        if num_iters == 1 and grad_norm_mode == "clip" and scaled_grad is not None:
-            grad_zt = scaled_grad.detach()
-        else:
-            grad_zt = -(zt.detach() - zt_original)
+        grad_zt = -(zt.detach() - zt_original)
         return grad_zt, loss_val if loss_val is not None else 0.0, zt_original
 
     def _progress_lookahead_decode(self, z_in: torch.Tensor, t_start_norm: float,
@@ -760,7 +744,6 @@ class FluxFlowMapSampler:
         return image_pil, latents_unpacked.detach(), initial_noise_unpacked
 
     def sample_reward_guided(self,
-                            reward_type: str = "ensemble",
                             reward_model=None,
                             num_steps: int = 28,
                             guidance_scale: float = 3.5,
@@ -781,7 +764,6 @@ class FluxFlowMapSampler:
                             grad_checkpointing: bool = False,
                             warmup_steps: int = 0,
                             warmup_particles: int = 1,
-                            warmup_lr: Optional[float] = None,
                             unguided_steps: int = 0,
                             progress_lookahead_steps: int = 0,
                             force_particle_idx: Optional[int] = None,) -> torch.Tensor:
@@ -789,7 +771,6 @@ class FluxFlowMapSampler:
         FLUX FlowMap reward-guided generation.
 
         Args:
-            reward_type: kept as a string for forward-compat.
             reward_model: RewardEnsemble instance.
             num_steps: Number of sampling steps.
             guidance_scale: FLUX embedded CFG scale (distinct from FMRG λ).
@@ -814,7 +795,6 @@ class FluxFlowMapSampler:
             grad_checkpointing: Enable transformer gradient checkpointing (saves VRAM).
             warmup_steps: Reinitialization rounds; 0 disables.
             warmup_particles: Particles per reinitialization.
-            warmup_lr: Learning rate during reinitialization (default: step_size).
             unguided_steps: Number of trailing uncontrolled flow-map steps to t=0.
         Returns:
             Generated image tensor in [0, 1].
@@ -878,7 +858,7 @@ class FluxFlowMapSampler:
         wu_steps = 0
         # Per-particle snapshots: wu_snapshots[p_idx][wi] = z after warmup step wi
         wu_snapshots = {}
-        if warmup_steps > 0 and warmup_particles > 1 and step_size > 0 and reward_type == "ensemble":
+        if warmup_steps > 0 and warmup_particles > 1 and step_size > 0:
             reward_ensemble = reward_model
             wu_steps = min(warmup_steps, actual_steps)
             print(f"Warm-up: {warmup_particles} particles × {wu_steps} guided steps")
@@ -939,7 +919,7 @@ class FluxFlowMapSampler:
                         z_p = z_p - dt * u_step - wt * grad_z0
 
                     elif grad_mode == "jac":
-                        vel_norm = torch.linalg.vector_norm(u_step, dim=(1, 2, 3), keepdim=True).detach() if grad_norm_mode in ["clip", "normalize"] else None
+                        vel_norm = torch.linalg.vector_norm(u_step, dim=(1, 2, 3), keepdim=True).detach() if grad_norm_mode == "normalize" else None
                         vel_t_next = 0.0 if sample_mode in ["flow_map1", "flow_map2"] else t_next.item()
                         grad_zt, _, zt_original = self.reward_consistency_xt(
                             zt=z_p, t_cur=t_cur.item(), reward_ensemble=reward_ensemble,
@@ -1105,7 +1085,7 @@ class FluxFlowMapSampler:
 
                 elif grad_mode == "jac":
                     # Gradient w.r.t z_t
-                    vel_norm = torch.linalg.vector_norm(u_step, dim=(1, 2, 3), keepdim=True).detach() if grad_norm_mode in ["clip", "normalize"] else None
+                    vel_norm = torch.linalg.vector_norm(u_step, dim=(1, 2, 3), keepdim=True).detach() if grad_norm_mode == "normalize" else None
                     vel_t_next = 0.0 if sample_mode in ["flow_map1", "flow_map2"] else t_next.item()
 
                     grad_zt, reward_loss, zt_original = self.reward_consistency_xt(

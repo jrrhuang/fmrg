@@ -1,6 +1,5 @@
 """
-Generate artistic images: unguided (base FLUX flow map) and FMTG-J guided.
-Produces before/after pairs for front-page figure selection.
+Generate artistic images: unguided (base FLUX flow map) and FMRG-J guided.
 
 Usage:
     python scripts/generate_aesthetic.py --mode unguided --output_dir icml/artistic_outputs/unguided
@@ -146,7 +145,6 @@ def main():
                         out = os.path.join(_la_dir, f"frame_{step_idx:03d}_t{t_next:.3f}_loss{float(reward_loss):.3f}.png")
                         save_image(((img_tensor + 1) / 2).clamp(0, 1), out)
                 image = sampler.sample_reward_guided(
-                    reward_type="ensemble",
                     reward_model=reward_ensemble,
                     num_steps=args.num_steps,
                     guidance_scale=guidance_scale,

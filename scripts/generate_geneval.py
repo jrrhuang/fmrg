@@ -9,8 +9,7 @@ Supports sharding via --start_idx / --end_idx for parallel jobs.
 Resumes automatically (skips existing images).
 
 Usage:
-    python generate_geneval.py --grad_mode jac --normalize_grad --num_steps 8 --step_size 0.3 --num_optim_iters 1
-    python generate_geneval.py --grad_mode euc --num_steps 8 --step_size 1.0 --num_optim_iters 1 --early_stop 5
+    python generate_geneval.py --grad_mode jac --normalize_grad --num_steps 10 --step_size 3.0
 """
 
 import argparse
@@ -59,8 +58,6 @@ def parse_args():
                         help="Noise optimization steps before guided sampling (0=disabled)")
     parser.add_argument("--warmup_particles", type=int, default=1,
                         help="Number of particles to sample during warm-up")
-    parser.add_argument("--warmup_lr", type=float, default=None,
-                        help="Learning rate for warm-up (default: step_size)")
 
     # Reward ensemble weights
     parser.add_argument("--hps_weight", type=float, default=5.0)
@@ -173,7 +170,6 @@ def main():
 
         # Generate with reward guidance
         image = sampler.sample_reward_guided(
-            reward_type="ensemble",
             reward_model=reward_ensemble,
             num_steps=steps,
             guidance_scale=guidance_scale,
@@ -191,7 +187,6 @@ def main():
             grad_checkpointing=args.grad_checkpointing,
             warmup_steps=args.warmup_steps,
             warmup_particles=args.warmup_particles,
-            warmup_lr=args.warmup_lr,
             unguided_steps=args.unguided_steps,
         )
 

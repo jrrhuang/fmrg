@@ -105,7 +105,7 @@ python scripts/aggregate_metrics.py --save_dir ./results/sr --gt_path /path/to/g
 ## Key flags
 
 - `--method {fmrg, flowdps, flowchef}` — guidance algorithm (inverse problems).
-- `--grad_mode {jac, euc}` — FMRG-J (Jacobian-coupled) vs FMRG-E (Euclidean). FMRG-E tends to be more effective for measurement losses (inverse problems); FMRG-J tends to be more effective for neural-network rewards.
+- `--grad_mode {jac, euc}` — FMRG-J (Jacobian-coupled) vs FMRG-E (Euclidean). FMRG-E is effective when the reward landscape is well-aligned with the data manifold; FMRG-J tends to be more effective for neural-network-based rewards.
 - `--normalize_grad` — rescale each gradient to the velocity norm.
 - `--sample_mode {flow_map1, flow_map2, flow_matching}` — 1-NFE flow-map step, 2-NFE flow-map step, or 1-NFE Euler step (baselines).
 - `--loss_mode {pixel, latent}` — measurement-loss space.

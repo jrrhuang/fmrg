@@ -508,10 +508,8 @@ class FluxFlowMapSampler:
         )
         time_steps = torch.cat([timesteps / 1000.0, torch.zeros(1, device=device)])
 
-        # Early stopping: apply guidance for the first 2/3 of the schedule, then
-        # complete with one uncontrolled flow-map step to t=0.
         if early_stop:
-            n_keep_end = int(num_steps / 1.5)
+            n_keep_end = 2 * num_steps // 3
             schedule_slice = time_steps[:n_keep_end]
             time_steps = torch.cat([schedule_slice, torch.zeros(1, device=device)])
             actual_steps = n_keep_end
@@ -717,10 +715,9 @@ class FluxFlowDPS(FluxFlowMapSampler):
             z1t = z + (1 - sigma) * pred_v
             delta = sigma - sigma_next
 
-            if i < NFE:
-                z0y = self.data_consistency_flowdps(z0t, operator, measurement, task=task,
-                                                    stepsize=step_size, num_iters=num_optim_iters)
-                z0y = (1 - sigma) * z0t + sigma * z0y
+            z0y = self.data_consistency_flowdps(z0t, operator, measurement, task=task,
+                                                stepsize=step_size, num_iters=num_optim_iters)
+            z0y = (1 - sigma) * z0t + sigma * z0y
 
             noise = math.sqrt(sigma_next) * z1t + math.sqrt(1 - sigma_next) * torch.randn_like(z1t)
             z = z0y + (sigma - delta) * (noise - z0y)
@@ -825,9 +822,8 @@ class FluxFlowChef(FluxFlowMapSampler):
             z1t = z + (1 - sigma) * pred_v
             delta = sigma - sigma_next
 
-            if i < NFE:
-                grad = self.data_consistency_flowchef(z0t, operator, measurement, task=task,
-                                                      stepsize=step_size, num_iters=num_optim_iters)
+            grad = self.data_consistency_flowchef(z0t, operator, measurement, task=task,
+                                                  stepsize=step_size, num_iters=num_optim_iters)
 
             z = z0t + (sigma - delta) * (z1t - z0t) - grad
 
