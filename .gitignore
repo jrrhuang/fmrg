@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Run outputs (overwritten by reproduce scripts)
+results/
+
+# Local environment artifacts
+.env
+*.log
+
+# Downloaded artifacts (populated by checkpoints_download.sh)
+checkpoints/

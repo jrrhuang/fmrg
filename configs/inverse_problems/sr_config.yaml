@@ -1,0 +1,9 @@
+# 4× super-resolution via average-pool downsampling (SVD pseudo-inverse).
+measurement:
+  operator:
+    name: sr_avgpool
+    deg_scale: 4
+
+  noise:
+    name: gaussian
+    sigma: 0.03

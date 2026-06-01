@@ -1,0 +1,28 @@
+# Artistic prompts for front-page figure
+# Mix of dreamy/poetic, painterly, cinematic, and compositional
+
+# Dreamy / Poetic
+A woman dissolving into cherry blossom petals, soft pastel tones, ethereal glow, dreamlike atmosphere
+Bathing moon siren, silver-blue glow, drifting water reflections, ethereal, soft haze
+Girl under floating lanterns, warm gold light, nostalgic haze, cinematic softness
+Lonely figure in a vast foggy landscape, muted earth tones, melancholic atmosphere, oil painting
+Underwater dreamscape, teal gradients, flowing silk fabric, slow motion, soft diffused light
+
+# Painterly / Fine Art
+Portrait of a woman, oil painting, chiaroscuro lighting, deep shadows, renaissance style, rich brushstrokes
+A Japanese garden at dawn, ink illustration, minimal lines, sumi-e style, misty atmosphere
+Forest landscape, watercolor wash, soft edges, light bleeding into paper, autumn colors
+Abstract human form, impressionist strokes, pastel colors, dreamy texture, soft focus
+An ancient temple overgrown with vines, gouache matte illustration, warm amber light, mystical
+
+# Cinematic / Photographic
+Woman standing in neon rain, cyberpunk city, reflections on wet pavement, cinematic lighting, 35mm film grain
+Close-up portrait of an elderly man, softbox lighting, shallow depth of field, every wrinkle tells a story
+A jazz musician playing saxophone, smoky bar, low key lighting, warm amber tones, candid moment
+Astronaut floating above Earth, cosmic solitude, volumetric light rays, serene, ultra detailed
+
+# Compositional (multiple elements)
+A curious orange fox and a fluffy white rabbit in a lush meadow filled with yellow dandelions, golden hour
+A red vintage car on a rain-soaked street at night, neon signs reflecting in puddles, moody atmosphere
+A golden retriever wearing a tiny crown sitting among wildflowers, soft bokeh, warm sunlight, joyful
+A blue ceramic vase with sunflowers on a rustic table, open window overlooking the ocean, afternoon light

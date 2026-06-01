@@ -1,0 +1,9 @@
+# Box inpainting: centered 64×64 mask (25% of a 256×256 image).
+measurement:
+  operator:
+    name: box_inpainting
+    deg_scale: 64
+
+  noise:
+    name: gaussian
+    sigma: 0.03

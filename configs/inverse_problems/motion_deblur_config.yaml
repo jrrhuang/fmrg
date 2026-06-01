@@ -1,0 +1,10 @@
+# Motion deblur. deg_scale is the kernel size; intensity is fixed at 0.5
+# in the operator (see functions/degradation.py).
+measurement:
+  operator:
+    name: deblur_motion
+    deg_scale: 61  # kernel size
+
+  noise:
+    name: gaussian
+    sigma: 0.03
