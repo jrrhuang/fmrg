@@ -133,12 +133,7 @@ fmrg/
 
 ## Acknowledgments
 
-The measurement-operator toolkit (`functions/`, `utils/`) and the FlowDPS /
-FlowChef baseline classes are adapted from
-[FlowDPS](https://github.com/FlowDPS-Inverse/FlowDPS). `utils/motionblur.py` is
-from [LeviBorodenko/motionblur](https://github.com/LeviBorodenko/motionblur).
-The FLUX FlowMap LoRAs are hosted at
-[`gabeguofanclub/flux-1-dev-flowmap-lsd`](https://huggingface.co/gabeguofanclub/flux-1-dev-flowmap-lsd).
+This repository builds on the codebase of [FlowDPS](https://github.com/FlowDPS-Inverse/FlowDPS).
 
 ## License
 
