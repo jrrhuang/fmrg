@@ -346,7 +346,7 @@ class FluxFlowMapSampler:
         with torch.no_grad():
             return self.decode(z)
 
-    def reward_consistency_reno(self, z0t: torch.Tensor, reward_ensemble: 'RewardEnsemble',
+    def reward_consistency(self, z0t: torch.Tensor, reward_ensemble: 'RewardEnsemble',
                                  prompt: str, stepsize: float = 0.1, num_iters: int = 3,
                                  lmbda: float = 0.0, timestep_idx: int = 0,
                                  total_timesteps: int = 20, use_adam: bool = True):
@@ -388,7 +388,7 @@ class FluxFlowMapSampler:
 
         return z0t_opt.detach(), loss_val if loss_val is not None else 0.0, total_grad.detach()
 
-    def reward_consistency_reno_xt(self, zt: torch.Tensor, t_cur: float,
+    def reward_consistency_xt(self, zt: torch.Tensor, t_cur: float,
                                     reward_ensemble: 'RewardEnsemble', prompt: str,
                                     prompt_embeds: torch.Tensor, pooled_prompt_embeds: torch.Tensor,
                                     guidance_scale: float = 3.5,
@@ -930,7 +930,7 @@ class FluxFlowMapSampler:
                                                          guidance_scale=guidance_scale, t_next=t_next.item())
 
                     if grad_mode == "euc":
-                        z0t_opt, _, _ = self.reward_consistency_reno(
+                        z0t_opt, _, _ = self.reward_consistency(
                             z0t=z0t, reward_ensemble=reward_ensemble, prompt=self.prompt_text,
                             stepsize=step_size, num_iters=num_optim_iters,
                             lmbda=lmbda, timestep_idx=wi, total_timesteps=actual_steps, use_adam=use_adam)
@@ -941,7 +941,7 @@ class FluxFlowMapSampler:
                     elif grad_mode == "jac":
                         vel_norm = torch.linalg.vector_norm(u_step, dim=(1, 2, 3), keepdim=True).detach() if grad_norm_mode in ["clip", "normalize"] else None
                         vel_t_next = 0.0 if sample_mode in ["flow_map1", "flow_map2"] else t_next.item()
-                        grad_zt, _, zt_original = self.reward_consistency_reno_xt(
+                        grad_zt, _, zt_original = self.reward_consistency_xt(
                             zt=z_p, t_cur=t_cur.item(), reward_ensemble=reward_ensemble,
                             prompt=self.prompt_text, prompt_embeds=prompt_embeds,
                             pooled_prompt_embeds=pooled_prompt_embeds, guidance_scale=guidance_scale,
@@ -1092,7 +1092,7 @@ class FluxFlowMapSampler:
 
                 if grad_mode == "euc":
                     # FMRG-E (Euclidean): wt = t * (1 - t_next).
-                    z0t_opt, reward_loss, _ = self.reward_consistency_reno(
+                    z0t_opt, reward_loss, _ = self.reward_consistency(
                         z0t=z0t, reward_ensemble=reward_ensemble,
                         prompt=self.prompt_text,
                         stepsize=step_size, num_iters=num_optim_iters,
@@ -1108,7 +1108,7 @@ class FluxFlowMapSampler:
                     vel_norm = torch.linalg.vector_norm(u_step, dim=(1, 2, 3), keepdim=True).detach() if grad_norm_mode in ["clip", "normalize"] else None
                     vel_t_next = 0.0 if sample_mode in ["flow_map1", "flow_map2"] else t_next.item()
 
-                    grad_zt, reward_loss, zt_original = self.reward_consistency_reno_xt(
+                    grad_zt, reward_loss, zt_original = self.reward_consistency_xt(
                         zt=z, t_cur=t_cur.item(),
                         reward_ensemble=reward_ensemble,
                         prompt=self.prompt_text,

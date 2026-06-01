@@ -29,7 +29,7 @@ fi
 # https://huggingface.co/black-forest-labs/FLUX.1-dev and run `huggingface-cli login`.
 huggingface-cli download black-forest-labs/FLUX.1-dev --quiet || true
 
-# Pre-warm the ReNO reward caches (HPSv2 / ImageReward / PickScore / CLIP).
+# Pre-warm reward-model caches.
 python - <<'PY' || true
 try: import hpsv2
 except Exception: pass

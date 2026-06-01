@@ -1,5 +1,5 @@
 #!/bin/bash
-# Reward-guided aesthetic generation (FMRG-J + ReNO ensemble).
+# Reward-guided aesthetic generation (FMRG-J).
 
 set -e
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Best-of-N: unguided sampling + ReNO reward rerank.
+# Best-of-N: unguided sampling + reward rerank.
 
 set -e
 

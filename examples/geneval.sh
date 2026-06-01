@@ -1,5 +1,5 @@
 #!/bin/bash
-# Reward-guided generation on GenEval prompts (FMRG-J + ReNO ensemble).
+# Reward-guided generation on GenEval prompts (FMRG-J).
 
 set -e
 
