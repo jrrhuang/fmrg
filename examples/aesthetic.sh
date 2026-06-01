@@ -27,10 +27,10 @@ python scripts/generate_aesthetic.py \
     --seeds 0 \
     --start_idx "$START_IDX" \
     --end_idx "$END_IDX" \
-    --nfe 13 \
-    --early_stop 5 \
-    --warmup_steps 2 \
-    --warmup_particles 3 \
+    --nfe 16 \
+    --early_stop 4 \
+    --warmup_steps 0 \
+    --warmup_particles 1 \
     --step_size 3.0 \
     --unguided_steps 2 \
     --sample_mode flow_map1 \
