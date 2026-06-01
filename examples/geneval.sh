@@ -23,7 +23,7 @@ python scripts/generate_geneval.py \
     --grad_mode jac \
     --normalize_grad \
     --sample_mode flow_map2 \
-    --nfe 20 \
+    --num_steps 10 \
     --step_size 3.0 \
     --num_optim_iters 1 \
     --early_stop 5 \

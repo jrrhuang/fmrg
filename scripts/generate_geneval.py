@@ -9,8 +9,8 @@ Supports sharding via --start_idx / --end_idx for parallel jobs.
 Resumes automatically (skips existing images).
 
 Usage:
-    python generate_geneval.py --grad_mode jac --normalize_grad --nfe 8 --step_size 0.3 --num_optim_iters 1
-    python generate_geneval.py --grad_mode euc --nfe 8 --step_size 1.0 --num_optim_iters 1 --early_stop 5
+    python generate_geneval.py --grad_mode jac --normalize_grad --num_steps 8 --step_size 0.3 --num_optim_iters 1
+    python generate_geneval.py --grad_mode euc --num_steps 8 --step_size 1.0 --num_optim_iters 1 --early_stop 5
 """
 
 import argparse
@@ -33,10 +33,6 @@ import imagereward_compat  # noqa: F401
 from fluxfm_sampler_reward import FluxFlowMapSampler, RewardEnsemble
 
 
-def _nfe_to_steps(nfe: int, sample_mode: str) -> int:
-    """flow_map1 uses 1 NFE per step; flow_map2 uses 2."""
-    return nfe if sample_mode == 'flow_map1' else nfe // 2
-
 LORA_PATH = os.environ.get("FMRG_LORA_PATH", os.path.join(REPO_ROOT, "checkpoints", "flux-flowmap-lora-512"))
 GENEVAL_PROMPTS = os.path.join(REPO_ROOT, "data", "geneval_prompts", "evaluation_metadata.jsonl")
 
@@ -52,7 +48,8 @@ def parse_args():
     parser.add_argument("--sample_mode", type=str, default="flow_map2",
                         choices=["flow_map1", "flow_map2"],
                         help="flow_map2 (2 NFE/step) or flow_map1 (1 NFE/step)")
-    parser.add_argument("--nfe", type=int, default=8)
+    parser.add_argument("--num_steps", type=int, default=8,
+                        help="Timestep schedule resolution.")
     parser.add_argument("--step_size", type=float, default=1.0)
     parser.add_argument("--num_optim_iters", type=int, default=1)
     parser.add_argument("--seed", type=int, default=0)
@@ -102,17 +99,17 @@ def main():
 
     sample_mode = args.sample_mode
     grad_norm_mode_internal = 'normalize' if args.normalize_grad else 'none'
-    steps = _nfe_to_steps(args.nfe, sample_mode)
+    steps = args.num_steps
     early_stop = args.early_stop
 
     # Auto-generate output dir
     if args.output_dir is None:
-        settings = f"fmrg_{args.grad_mode}_nfe{args.nfe}_ss{args.step_size}_oi{args.num_optim_iters}"
+        settings = f"fmrg_{args.grad_mode}_ns{args.num_steps}_ss{args.step_size}_oi{args.num_optim_iters}"
         args.output_dir = os.path.join(SCRIPT_DIR, "outputs", "geneval", settings)
 
     print(f"FMRG-{'J' if args.grad_mode == 'jac' else 'E'} GenEval generation")
     print(f"  sample_mode={sample_mode}, normalize_grad={args.normalize_grad}")
-    print(f"  nfe={args.nfe}, steps={steps}, early_stop={early_stop}")
+    print(f"  num_steps={args.num_steps}, early_stop={early_stop}")
     print(f"  step_size={args.step_size}, num_optim_iters={args.num_optim_iters}")
     print(f"  seed={args.seed}, resolution={args.resolution}")
     print(f"  grad_checkpointing={args.grad_checkpointing}")

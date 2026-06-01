@@ -27,7 +27,7 @@ python scripts/generate_aesthetic.py \
     --seeds 0 \
     --start_idx "$START_IDX" \
     --end_idx "$END_IDX" \
-    --nfe 16 \
+    --num_steps 16 \
     --early_stop 4 \
     --warmup_steps 0 \
     --warmup_particles 1 \

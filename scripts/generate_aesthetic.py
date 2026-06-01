@@ -51,7 +51,7 @@ def main():
     parser.add_argument("--start_idx", type=int, default=0)
     parser.add_argument("--end_idx", type=int, default=0, help="0 = all")
     # Guided FMRG-J config.
-    parser.add_argument("--nfe", type=int, default=32, help="Total NFE budget for guided mode.")
+    parser.add_argument("--num_steps", type=int, default=32, help="Timestep schedule resolution for guided mode.")
     parser.add_argument("--early_stop", type=int, default=8,
                         help="Early stop at step N; 0=disabled.")
     parser.add_argument("--warmup_steps", type=int, default=4,
@@ -148,7 +148,7 @@ def main():
                 image = sampler.sample_reward_guided(
                     reward_type="ensemble",
                     reward_model=reward_ensemble,
-                    num_steps=args.nfe,  # nfe_to_steps for fm1 is identity
+                    num_steps=args.num_steps,
                     guidance_scale=guidance_scale,
                     step_size=args.step_size,
                     img_shape=(args.resolution, args.resolution),
