@@ -9,53 +9,13 @@ https://arxiv.org/abs/2604.27147
 
 by Jerry Y. Huang, Justin Lin, Sheel Shah, Kartik Nair, and Nicholas M. Boffi.
 
-## Background
-
-Flow maps are few-step generative models that approximate the solution operator
-of a flow ODE, replacing iterative denoising with a learned trajectory predictor.
-This makes high-quality samples reachable in only a handful of network forward
-passes — but also makes the usual inference-time control techniques developed
-for diffusion (posterior sampling, classifier-free guidance, reward tilting)
-nontrivial to apply: gradient signals must now propagate through the flow map
-rather than through a long sampling chain.
-
-FMRG closes that gap. It formulates inference-time alignment of a pre-trained
-flow map as a deterministic optimal-control problem, then derives two practical
-training-free guidance schemes from the resulting first-order conditions. The
-result is one framework that handles both classical latent-space inverse
-problems and learned reward objectives, in only a few NFEs per sample.
-
-## What this paper does
-
-### 1. A control-theoretic framework for flow-map guidance
-
-We cast inference-time alignment as the minimization of a terminal reward over
-the flow map's trajectory. The first-order optimality conditions of this
-problem give a clean prescription for how the trajectory should be perturbed,
-without retraining and without ever invoking a long sampling chain.
-
-### 2. Two training-free guidance algorithms
-
-Two solvers fall out of the framework:
-
-- **FMRG-J** — Jacobian variant. Backpropagates the reward gradient through
-  the flow map's endpoint prediction. Higher fidelity to the optimal-control
-  solution; requires gradient checkpointing at higher resolutions.
-- **FMRG-E** — Euclidean variant. Drops the Jacobian and applies a direct
-  correction to the predicted clean sample. Cheaper per step, robust, and
-  competitive with FMRG-J on most inverse-problem tasks.
-
-Both are selectable from a single CLI flag (`--grad_mode {jac, euc}`).
-
-### 3. Applications
-
-- **Latent-space inverse problems** on FLUX.1-Dev with a distilled flow-map
-  LoRA: 4× super-resolution, 61×61 motion deblur, and 64×64 box inpainting.
-- **Reward-guided generation** with a reward ensemble on artistic and
-  GenEval prompts.
-
-The release also ships FLUX-FlowMap ports of the FlowDPS and FlowChef
-baselines under `--method {flowdps, flowchef}` for direct comparison.
+FMRG is a training-free framework for inference-time alignment of pre-trained
+flow maps. Guidance is cast as a deterministic optimal-control problem over the
+flow map's trajectory; two practical algorithms — Jacobian (**FMRG-J**) and
+Euclidean (**FMRG-E**) — fall out of the first-order conditions. The same
+framework covers classical latent-space inverse problems and learned reward
+objectives in only a few NFEs per sample. The release also ships FLUX-FlowMap
+ports of the FlowDPS and FlowChef baselines (`--method {flowdps, flowchef}`).
 
 ## Installation
 
