@@ -3,11 +3,6 @@
 [![ICML 2026](https://img.shields.io/badge/ICML-2026-blue.svg)](https://icml.cc/)
 [![arXiv](https://img.shields.io/badge/arXiv-2604.27147-b31b1b.svg)](https://arxiv.org/abs/2604.27147)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-yellow.svg)](LICENSE)
-
-https://arxiv.org/abs/2604.27147
-
-by Jerry Y. Huang, Justin Lin, Sheel Shah, Kartik Nair, and Nicholas M. Boffi.
 
 FMRG is a training-free framework for inference-time alignment of pre-trained
 flow maps. Guidance is cast as a deterministic optimal-control problem over the
@@ -40,10 +35,6 @@ bash checkpoints_download.sh
 It also pre-warms the reward-model caches under `$HF_HOME`.
 
 ## Quick start
-
-For one-command runs with defaults filled in, see `examples/` (e.g.
-`bash examples/aesthetic.sh`). The commands below show the underlying
-Python entry points.
 
 ### Inverse problems
 
