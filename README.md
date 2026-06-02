@@ -105,13 +105,13 @@ python scripts/generate_aesthetic.py --mode guided \
     --step_size 3.0 --unguided_steps 2 --sample_mode flow_map1
 ```
 
-Compositional generation on GenEval:
+Compositional generation on GenEval (NFE 30):
 
 ```bash
 python scripts/generate_geneval.py \
     --grad_mode jac --normalize_grad --sample_mode flow_map2 \
-    --num_steps 10 --step_size 3.0 --num_optim_iters 1 \
-    --early_stop 5 --warmup_steps 4 --warmup_particles 3 \
+    --num_steps 35 --step_size 2.0 --num_optim_iters 1 \
+    --early_stop 7 --warmup_steps 3 --warmup_particles 3 --unguided_steps 2 \
     --grad_checkpointing \
     --prompts_file data/geneval_prompts/evaluation_metadata.jsonl \
     --output_dir ./results/geneval --start_idx 0 --end_idx 1 --num_samples 1
