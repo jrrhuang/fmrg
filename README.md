@@ -1,4 +1,4 @@
-# How to Guide Your Flow: Few-Step Alignment via Flow Map Reward Guidance (ICML 2026)
+# How to Guide Your Flow: Few-Step Alignment via Flow Map Reward Guidance
 
 ### [Paper](https://arxiv.org/abs/2604.27147) | [Project Page](https://flow-map-reward-guidance.github.io/)
 
