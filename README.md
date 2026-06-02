@@ -31,11 +31,7 @@ conda activate fmrg_env
 bash checkpoints_download.sh
 ```
 
-`install.sh` creates a Python 3.11 / torch 2.5.1+cu121 environment from
-`environment.yml` and pip-installs `clip`, `image-reward`, and `hpsv2` with
-`--no-build-isolation` (their `setup.py` modules require legacy
-`pkg_resources`).
-
+`install.sh` creates a conda env named `fmrg_env` from `environment.yml`.
 `checkpoints_download.sh` fetches two FLUX FlowMap LoRAs into `checkpoints/`:
 
 - `flux-flowmap-lora/` (256-res) — used by inverse problems.
