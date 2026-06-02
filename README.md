@@ -1,5 +1,6 @@
-# FMRG — Flow Map Reward Guidance
+# How to Guide Your Flow: Few-Step Alignment via Flow Map Reward Guidance
 
+[![Project Page](https://img.shields.io/badge/Project-Page-blue.svg)](https://flow-map-reward-guidance.github.io/)
 [![ICML 2026](https://img.shields.io/badge/ICML-2026-blue.svg)](https://icml.cc/)
 [![arXiv](https://img.shields.io/badge/arXiv-2604.27147-b31b1b.svg)](https://arxiv.org/abs/2604.27147)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
