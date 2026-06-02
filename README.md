@@ -1,12 +1,11 @@
-# How to Guide Your Flow: Few-Step Alignment via Flow Map Reward Guidance (ICML 2026)<br><sub>Official PyTorch Implementation</sub>
+# How to Guide Your Flow: Few-Step Alignment via Flow Map Reward Guidance (ICML 2026)
 
 ### [Paper](https://arxiv.org/abs/2604.27147) | [Project Page](https://flow-map-reward-guidance.github.io/)
 
-![](assets/teaser.png)
-
-> [**How to Guide Your Flow: Few-Step Alignment via Flow Map Reward Guidance**](https://arxiv.org/abs/2604.27147)<br>
 > Jerry Y. Huang\*, Justin Lin\*, Sheel Shah, Kartik Nair, Nicholas M. Boffi
-> <br>Carnegie Mellon University<br>
+> <br>Carnegie Mellon University
+
+![](assets/teaser.png)
 
 In generative modeling, we often wish to produce samples that maximize a
 user-specified reward such as aesthetic quality or alignment with human
@@ -115,7 +114,7 @@ python scripts/generate_geneval.py \
     --output_dir ./results/geneval --start_idx 0 --end_idx 1 --num_samples 1
 ```
 
-512-res reward guidance uses `--grad_checkpointing` to fit within ~48 GB VRAM (e.g. L40S). The aesthetic prompt set is in `data/artistic_prompts.txt`.
+512-res reward guidance uses `--grad_checkpointing` to fit within ~48 GB VRAM (e.g. L40S).
 
 ## Recommendations
 
