@@ -65,6 +65,16 @@ Available task configs:
 `--resolution {256, 512}` auto-selects the matching LoRA. `--normalize_grad`
 rescales each per-iteration gradient to the velocity norm.
 
+`--image_path` also accepts a directory; reconstructions, measurements, and
+ground-truth copies are written to `<save_dir>/<operator>/{recon,input,label}/`,
+which `scripts/aggregate_metrics.py` consumes directly:
+
+```bash
+python scripts/aggregate_metrics.py \
+    --save_dir ./results/sr/sr_avgpool \
+    --gt_path ./results/sr/sr_avgpool/label
+```
+
 ### Reward-guided generation
 
 FMRG-J at 512 resolution uses gradient checkpointing (`--grad_checkpointing`) to fit within a single 48 GB GPU (e.g. L40S).
