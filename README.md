@@ -25,8 +25,6 @@ FMRG matches or surpasses baselines across inverse problems, style transfer,
 human preferences, and VLM rewards with as few as 3 NFEs, giving at least an
 order-of-magnitude speedup in comparison to prior state of the art.
 
-![](assets/aesthetic_samples.png)
-
 ## Installation
 
 ```bash
@@ -106,6 +104,8 @@ python scripts/generate_aesthetic.py --mode guided \
     --num_steps 16 --early_stop 4 --warmup_steps 0 --warmup_particles 1 \
     --step_size 3.0 --unguided_steps 2 --sample_mode flow_map1
 ```
+
+![](assets/aesthetic_samples.png)
 
 Compositional generation on GenEval:
 
