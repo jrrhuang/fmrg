@@ -7,6 +7,8 @@
 
 ![](assets/teaser.png)
 
+## Abstract
+
 In generative modeling, we often wish to produce samples that maximize a
 user-specified reward such as aesthetic quality or alignment with human
 preferences, a problem known as guidance. Despite their widespread use, existing
