@@ -90,7 +90,7 @@ python scripts/aggregate_metrics.py \
 
 FMRG-J at 512 resolution uses gradient checkpointing (`--grad_checkpointing`) to fit within a single 48 GB GPU (e.g. L40S).
 
-Aesthetic generation with FMRG-J on a list of free-form prompts:
+Aesthetic generation with FMRG-J on a list of free-form prompts (NFE 5; the prompts file matches the canonical aesthetic figure set; `data/three_custom_prompts.txt` is the additional prompt set for the eye / NY Flow / gothic-horse figures):
 
 ```bash
 python scripts/generate_aesthetic.py --mode guided \
@@ -100,6 +100,8 @@ python scripts/generate_aesthetic.py --mode guided \
     --num_steps 16 --early_stop 4 --warmup_steps 0 --warmup_particles 1 \
     --step_size 3.0 --unguided_steps 2 --sample_mode flow_map1
 ```
+
+For NFE 9 use `--num_steps 32 --early_stop 8`; for NFE 13 use `--num_steps 48 --early_stop 12`. All other flags are identical.
 
 Compositional generation on the GenEval prompt set:
 
