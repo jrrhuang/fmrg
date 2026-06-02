@@ -47,9 +47,9 @@ Shell wrappers that run each pipeline with default settings are provided in `exa
 python scripts/solve_inverse_problem.py \
     --task_config configs/inverse_problems/sr_config.yaml \
     --image_path data/inverse_examples/corgi.png \
-    --method fmrg --grad_mode jac --normalize_grad \
-    --num_steps 30 --step_size 5.0 --num_optim_iters 1 \
-    --sample_mode flow_map1 --loss_mode pixel \
+    --method fmrg --grad_mode euc \
+    --num_steps 15 --num_optim_iters 5 --step_size 10 \
+    --sample_mode flow_map2 --loss_mode latent \
     --prompt "a photo of a dog" --seed 0 \
     --save_dir ./results/sr --resolution 256
 ```
@@ -64,6 +64,16 @@ Available task configs:
 
 `--resolution {256, 512}` auto-selects the matching LoRA. `--normalize_grad`
 rescales each per-iteration gradient to the velocity norm.
+
+For other inverse-problem cells, swap `--num_steps` and `--step_size`:
+
+| Variant | Dataset | NFE | `--num_steps` | `--step_size` |
+|---|---|---|---|---|
+| FMRG-E | AFHQ | 30 | 15 | 10 |
+| FMRG-E | AFHQ | 60 | 30 | 7 |
+| FMRG-E | FFHQ | 30 | 15 | 9 |
+| FMRG-E | FFHQ | 60 | 30 | 5 |
+| FMRG-J | both | 30 / 60 | 15 / 30 | 3 (add `--grad_mode jac --normalize_grad --num_optim_iters 1`) |
 
 `--image_path` also accepts a directory; reconstructions, measurements, and
 ground-truth copies are written to `<save_dir>/<operator>/{recon,input,label}/`.
@@ -123,9 +133,9 @@ python scripts/aggregate_metrics.py --save_dir ./results/sr --gt_path /path/to/g
 ## Key flags
 
 - `--method {fmrg, flowdps, flowchef}` — guidance algorithm (inverse problems).
-- `--grad_mode {jac, euc}` — FMRG-J (Jacobian-coupled) vs FMRG-E (Euclidean). FMRG-E is effective when the reward landscape is well-aligned with the data manifold; FMRG-J tends to be more effective for neural-network-based rewards.
-- `--normalize_grad` — rescale each gradient to the velocity norm.
-- `--sample_mode {flow_map1, flow_map2, flow_matching}` — 1-NFE flow-map step, 2-NFE flow-map step, or 1-NFE Euler step (baselines).
+- `--grad_mode {jac, euc}` — FMRG-J (Jacobian-coupled) vs FMRG-E (Euclidean). Use FMRG-E for inverse problems (the reward landscape is well-aligned with the data manifold); use FMRG-J for neural-network rewards (aesthetic, compositional).
+- `--normalize_grad` — rescale each gradient to the velocity norm. Recommended for FMRG-J.
+- `--sample_mode {flow_map1, flow_map2, flow_matching}` — 1-NFE flow-map step, 2-NFE flow-map step, or 1-NFE Euler step (baselines). Use `flow_map1` to allocate more updates to guidance in the low-NFE regime; `flow_map2` for higher-NFE budgets.
 - `--loss_mode {pixel, latent}` — measurement-loss space.
 - `--resolution {256, 512}` — auto-selects the matching LoRA.
 - `--early_stop` — last guided step before the trailing unguided tail.

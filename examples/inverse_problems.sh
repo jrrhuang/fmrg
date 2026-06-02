@@ -21,13 +21,12 @@ GT_PATH="${GT_PATH:-}"
 COMMON_ARGS=(
     --image_path "$IMAGE_PATH"
     --method fmrg
-    --grad_mode jac
-    --normalize_grad
-    --num_steps 30
-    --step_size 5.0
-    --num_optim_iters 1
-    --sample_mode flow_map1
-    --loss_mode pixel
+    --grad_mode euc
+    --num_steps 15
+    --num_optim_iters 5
+    --step_size 10
+    --sample_mode flow_map2
+    --loss_mode latent
     --seed 0
     --resolution 256
     --batch_size 1
