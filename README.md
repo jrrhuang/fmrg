@@ -25,8 +25,7 @@ This repository contains:
 
 - FMRG-J and FMRG-E samplers for latent-space inverse problems and reward-guided text-to-image generation.
 - FLUX-FlowMap ports of the FlowDPS and FlowChef single-trajectory baselines.
-- Two trained FLUX FlowMap LoRAs (256-res and 512-res) covering both task families.
-- A reward ensemble (HPSv2 + ImageReward + PickScore + CLIP) for reward-guided generation.
+- A reward ensemble wrapping HPSv2, ImageReward, PickScore, and CLIP.
 - A metric aggregator (PSNR / SSIM / LPIPS / FID / KID) for inverse-problem evaluation.
 
 ## Installation
