@@ -4,13 +4,22 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2604.27147-b31b1b.svg)](https://arxiv.org/abs/2604.27147)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 
-FMRG is a training-free framework for inference-time alignment of pre-trained
-flow maps. Guidance is cast as a deterministic optimal-control problem over the
-flow map's trajectory; two practical algorithms — Jacobian (**FMRG-J**) and
-Euclidean (**FMRG-E**) — fall out of the first-order conditions. The same
-framework covers classical latent-space inverse problems and learned reward
-objectives in only a few NFEs per sample. The release also ships FLUX-FlowMap
-ports of the FlowDPS and FlowChef baselines (`--method {flowdps, flowchef}`).
+In generative modeling, we often wish to produce samples that maximize a
+user-specified reward such as aesthetic quality or alignment with human
+preferences, a problem known as guidance. Despite their widespread use, existing
+guidance methods either require expensive multi-particle, many-step schemes or
+rely on poorly understood approximations. We reformulate guidance as a
+deterministic optimal control problem, yielding a hierarchy of algorithms that
+subsumes existing approaches at the coarsest level. We show that the flow map,
+an object of significant recent interest for its role in fast inference, arises
+naturally in the optimal solution. Based on this observation, we propose Flow
+Map Reward Guidance (FMRG): a training-free, single-trajectory framework that
+uses the flow map to both integrate and guide the flow. At text-to-image scale,
+FMRG matches or surpasses baselines across inverse problems, style transfer,
+human preferences, and VLM rewards with as few as 3 NFEs, giving at least an
+order-of-magnitude speedup in comparison to prior state of the art.
+
+![](assets/teaser.png)
 
 ## Installation
 
