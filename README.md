@@ -1,9 +1,12 @@
-# How to Guide Your Flow: Few-Step Alignment via Flow Map Reward Guidance
+# How to Guide Your Flow: Few-Step Alignment via Flow Map Reward Guidance (ICML 2026)<br><sub>Official PyTorch Implementation</sub>
 
-[![Project Page](https://img.shields.io/badge/Project-Page-blue.svg)](https://flow-map-reward-guidance.github.io/)
-[![ICML 2026](https://img.shields.io/badge/ICML-2026-blue.svg)](https://icml.cc/)
-[![arXiv](https://img.shields.io/badge/arXiv-2604.27147-b31b1b.svg)](https://arxiv.org/abs/2604.27147)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+### [Paper](https://arxiv.org/abs/2604.27147) | [Project Page](https://flow-map-reward-guidance.github.io/)
+
+![](assets/teaser.png)
+
+> [**How to Guide Your Flow: Few-Step Alignment via Flow Map Reward Guidance**](https://arxiv.org/abs/2604.27147)<br>
+> Jerry Y. Huang\*, Justin Lin\*, Sheel Shah, Kartik Nair, Nicholas M. Boffi
+> <br>Carnegie Mellon University<br>
 
 In generative modeling, we often wish to produce samples that maximize a
 user-specified reward such as aesthetic quality or alignment with human
@@ -19,8 +22,6 @@ uses the flow map to both integrate and guide the flow. At text-to-image scale,
 FMRG matches or surpasses baselines across inverse problems, style transfer,
 human preferences, and VLM rewards with as few as 3 NFEs, giving at least an
 order-of-magnitude speedup in comparison to prior state of the art.
-
-![](assets/teaser.png)
 
 ## Installation
 
