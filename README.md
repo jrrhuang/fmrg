@@ -90,9 +90,7 @@ python scripts/aggregate_metrics.py \
 
 ### Reward-guided generation
 
-FMRG-J at 512 resolution uses gradient checkpointing (`--grad_checkpointing`) to fit within a single 48 GB GPU (e.g. L40S).
-
-Aesthetic generation with FMRG-J on a list of free-form prompts (NFE 5; the prompts file matches the canonical aesthetic figure set; `data/three_custom_prompts.txt` is the additional prompt set for the eye / NY Flow / gothic-horse figures):
+Aesthetic generation with FMRG-J (NFE 5; for NFE 9 / 13 swap to `--num_steps 32 --early_stop 8` / `--num_steps 48 --early_stop 12`):
 
 ```bash
 python scripts/generate_aesthetic.py --mode guided \
@@ -103,9 +101,7 @@ python scripts/generate_aesthetic.py --mode guided \
     --step_size 3.0 --unguided_steps 2 --sample_mode flow_map1
 ```
 
-For NFE 9 use `--num_steps 32 --early_stop 8`; for NFE 13 use `--num_steps 48 --early_stop 12`. All other flags are identical.
-
-Compositional generation on the GenEval prompt set:
+Compositional generation on GenEval:
 
 ```bash
 python scripts/generate_geneval.py \
@@ -117,7 +113,7 @@ python scripts/generate_geneval.py \
     --output_dir ./results/geneval --start_idx 0 --end_idx 1 --num_samples 1
 ```
 
-Best-of-N reward-rerank baseline (unguided sampling + reward-ensemble selection):
+Best-of-N reward-rerank baseline:
 
 ```bash
 python scripts/best_of_n.py \
@@ -125,6 +121,8 @@ python scripts/best_of_n.py \
     --output_dir ./results/best_of_n \
     --n 8 --resolution 512 --num_steps 8
 ```
+
+512-res reward guidance uses `--grad_checkpointing` to fit within ~48 GB VRAM (e.g. L40S). `data/artistic_prompts.txt` contains the canonical aesthetic figure prompts; `data/three_custom_prompts.txt` contains the eye / NY Flow / gothic-horse figure prompts.
 
 ### Metrics
 
@@ -134,13 +132,17 @@ Dataset-level PSNR / SSIM / LPIPS / FID / KID over an inverse-problem run:
 python scripts/aggregate_metrics.py --save_dir ./results/sr --gt_path /path/to/gt_dir
 ```
 
+## Recommendations
+
+FMRG-E (`--grad_mode euc`) tends to work well for measurement-based inverse problems, where the reward landscape lies close to the data manifold; FMRG-J (`--grad_mode jac`) tends to work well for neural-network rewards such as human-preference models. `--sample_mode flow_map1` (1 NFE per step) suits low-NFE budgets; `--sample_mode flow_map2` (2 NFE per step) suits higher-NFE regimes. We use `--num_optim_iters 1` with `--normalize_grad` for FMRG-J (each iteration is a full flow-map forward+backward), and `--num_optim_iters 3–5` for FMRG-E (cheap inner iterations through VAE decode + reward).
+
 ## Key flags
 
 - `--method {fmrg, flowdps, flowchef}` — guidance algorithm (inverse problems).
-- `--grad_mode {jac, euc}` — FMRG-J (Jacobian-coupled) vs FMRG-E (Euclidean). Use FMRG-E for inverse problems (the reward landscape is well-aligned with the data manifold); use FMRG-J for neural-network rewards (aesthetic, compositional).
-- `--normalize_grad` — rescale each gradient to the velocity norm. Recommended for FMRG-J.
-- `--num_optim_iters` — inner-loop gradient steps per guided step. Use 1 for FMRG-J (each iteration requires a full flow-map forward+backward pass); 3–5 for FMRG-E (cheap inner iterations through VAE decode + reward).
-- `--sample_mode {flow_map1, flow_map2, flow_matching}` — 1-NFE flow-map step, 2-NFE flow-map step, or 1-NFE Euler step (baselines). Use `flow_map1` to allocate more updates to guidance in the low-NFE regime; `flow_map2` for higher-NFE budgets.
+- `--grad_mode {jac, euc}` — FMRG-J (Jacobian-coupled) vs FMRG-E (Euclidean).
+- `--normalize_grad` — rescale each gradient to the velocity norm.
+- `--num_optim_iters` — inner-loop gradient steps per guided step.
+- `--sample_mode {flow_map1, flow_map2, flow_matching}` — 1-NFE flow-map step, 2-NFE flow-map step, or 1-NFE Euler step (baselines).
 - `--loss_mode {pixel, latent}` — measurement-loss space.
 - `--resolution {256, 512}` — auto-selects the matching LoRA.
 - `--early_stop` — last guided step before the trailing unguided tail.
