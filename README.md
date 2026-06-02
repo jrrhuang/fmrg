@@ -113,24 +113,7 @@ python scripts/generate_geneval.py \
     --output_dir ./results/geneval --start_idx 0 --end_idx 1 --num_samples 1
 ```
 
-Best-of-N reward-rerank baseline:
-
-```bash
-python scripts/best_of_n.py \
-    --prompts_file data/artistic_prompts.txt \
-    --output_dir ./results/best_of_n \
-    --n 8 --resolution 512 --num_steps 8
-```
-
-512-res reward guidance uses `--grad_checkpointing` to fit within ~48 GB VRAM (e.g. L40S). `data/artistic_prompts.txt` contains the canonical aesthetic figure prompts; `data/three_custom_prompts.txt` contains the eye / NY Flow / gothic-horse figure prompts.
-
-### Metrics
-
-Dataset-level PSNR / SSIM / LPIPS / FID / KID over an inverse-problem run:
-
-```bash
-python scripts/aggregate_metrics.py --save_dir ./results/sr --gt_path /path/to/gt_dir
-```
+512-res reward guidance uses `--grad_checkpointing` to fit within ~48 GB VRAM (e.g. L40S). Bundled aesthetic prompts: `data/artistic_prompts.txt` (canonical figure set) and `data/three_custom_prompts.txt` (eye / NY Flow / gothic-horse).
 
 ## Recommendations
 
@@ -154,7 +137,7 @@ FMRG-E (`--grad_mode euc`) tends to work well for measurement-based inverse prob
 ```
 fmrg/
 ├── scripts/                          # entry points
-│   ├── solve_inverse_problem.py      # FMRG / FlowDPS / FlowChef on inverse problems
+│   ├── solve_inverse_problem.py      # FMRG + baselines on inverse problems
 │   ├── generate_aesthetic.py         # FMRG-J + reward ensemble on aesthetic prompts
 │   ├── generate_geneval.py           # FMRG + reward ensemble on GenEval prompts
 │   ├── best_of_n.py                  # unguided + reward-ensemble rerank baseline
