@@ -2,10 +2,10 @@
 
 ### [Paper](https://arxiv.org/abs/2604.27147) | [Project Page](https://flow-map-reward-guidance.github.io/)
 
+![](assets/teaser.png)
+
 > Jerry Y. Huang\*, Justin Lin\*, Sheel Shah, Kartik Nair, Nicholas M. Boffi
 > <br>Carnegie Mellon University
-
-![](assets/teaser.png)
 
 In generative modeling, we often wish to produce samples that maximize a
 user-specified reward such as aesthetic quality or alignment with human
