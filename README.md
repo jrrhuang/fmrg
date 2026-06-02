@@ -21,13 +21,6 @@ order-of-magnitude speedup in comparison to prior state of the art.
 
 ![](assets/teaser.png)
 
-This repository contains:
-
-- FMRG-J and FMRG-E samplers for latent-space inverse problems and reward-guided text-to-image generation.
-- FLUX-FlowMap ports of the FlowDPS and FlowChef single-trajectory baselines.
-- A reward ensemble wrapping HPSv2, ImageReward, PickScore, and CLIP.
-- A metric aggregator (PSNR / SSIM / LPIPS / FID / KID) for inverse-problem evaluation.
-
 ## Installation
 
 ```bash
@@ -74,6 +67,8 @@ rescales each per-iteration gradient to the velocity norm.
 
 ### Reward-guided generation
 
+FMRG-J at 512 resolution uses gradient checkpointing (`--grad_checkpointing`) to fit within a single 48 GB GPU (e.g. L40S).
+
 Aesthetic generation with FMRG-J on a list of free-form prompts:
 
 ```bash
@@ -85,7 +80,7 @@ python scripts/generate_aesthetic.py --mode guided \
     --step_size 3.0 --unguided_steps 2 --sample_mode flow_map1
 ```
 
-Compositional generation on the GenEval prompt set (uses gradient checkpointing for 512-res):
+Compositional generation on the GenEval prompt set:
 
 ```bash
 python scripts/generate_geneval.py \
