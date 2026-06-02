@@ -1006,7 +1006,6 @@ class FluxFlowMapSampler:
             if unguided_steps > 1 and i == actual_steps - 1:
                 z_before_last = z.detach().clone()
                 t_before_last = t_cur.item()
-                break
 
             # Enable gradients on z if needed for xt mode
             if grad_mode == "jac" and not z.requires_grad:
