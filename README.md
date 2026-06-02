@@ -117,7 +117,7 @@ python scripts/generate_geneval.py \
 
 ## Recommendations
 
-FMRG-E (`--grad_mode euc`) tends to work well for measurement-based inverse problems, where the reward landscape lies close to the data manifold; FMRG-J (`--grad_mode jac`) tends to work well for neural-network rewards such as human-preference models. `--sample_mode flow_map1` (1 NFE per step) suits low-NFE budgets; `--sample_mode flow_map2` (2 NFE per step) suits higher-NFE regimes. We use `--num_optim_iters 1` with `--normalize_grad` for FMRG-J (each iteration is a full flow-map forward+backward), and `--num_optim_iters 3–5` for FMRG-E (cheap inner iterations through VAE decode + reward).
+FMRG-E (`--grad_mode euc`) tends to work well for measurement-based inverse problems, where the reward landscape lies close to the data manifold; FMRG-J (`--grad_mode jac`) tends to work well for neural-network rewards such as human-preference models. `--sample_mode flow_map1` (1 NFE per step) suits low-NFE budgets; `--sample_mode flow_map2` (2 NFE per step) suits higher-NFE regimes.
 
 ## Key flags
 
