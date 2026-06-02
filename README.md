@@ -66,12 +66,13 @@ Available task configs:
 rescales each per-iteration gradient to the velocity norm.
 
 `--image_path` also accepts a directory; reconstructions, measurements, and
-ground-truth copies are written to `<save_dir>/<operator>/{recon,input,label}/`,
-which `scripts/aggregate_metrics.py` consumes directly:
+ground-truth copies are written to `<save_dir>/<operator>/{recon,input,label}/`.
+Pass `--compute_metrics` to record per-image PSNR / SSIM / LPIPS; then
+`scripts/aggregate_metrics.py` aggregates them and adds FID / KID:
 
 ```bash
 python scripts/aggregate_metrics.py \
-    --save_dir ./results/sr/sr_avgpool \
+    --save_dir ./results/sr \
     --gt_path ./results/sr/sr_avgpool/label
 ```
 
