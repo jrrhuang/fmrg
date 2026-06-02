@@ -22,10 +22,10 @@ COMMON_ARGS=(
     --image_path "$IMAGE_PATH"
     --method fmrg
     --grad_mode euc
-    --num_steps 15
+    --num_steps 6
     --num_optim_iters 5
-    --step_size 10
-    --sample_mode flow_map2
+    --step_size 20
+    --sample_mode flow_map1
     --loss_mode latent
     --seed 0
     --resolution 256
