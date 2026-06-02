@@ -105,8 +105,6 @@ python scripts/generate_aesthetic.py --mode guided \
     --step_size 3.0 --unguided_steps 2 --sample_mode flow_map1
 ```
 
-![](assets/aesthetic_samples.png)
-
 Compositional generation on GenEval:
 
 ```bash
@@ -120,6 +118,10 @@ python scripts/generate_geneval.py \
 ```
 
 512-res reward guidance uses `--grad_checkpointing` to fit within ~48 GB VRAM (e.g. L40S).
+
+## Samples
+
+![](assets/aesthetic_samples.png)
 
 ## Recommendations
 
