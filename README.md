@@ -25,6 +25,8 @@ FMRG matches or surpasses baselines across inverse problems, style transfer,
 human preferences, and VLM rewards with as few as 3 NFEs, giving at least an
 order-of-magnitude speedup in comparison to prior state of the art.
 
+![](assets/aesthetic_samples.png)
+
 ## Installation
 
 ```bash
