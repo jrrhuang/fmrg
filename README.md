@@ -153,8 +153,10 @@ fmrg/
 ├── examples/                         # one-command shell wrappers
 ├── configs/inverse_problems/         # task YAMLs (SR, motion deblur, inpainting)
 ├── data/                             # prompts and sample inputs
+├── assets/                           # teaser and sample figures
 ├── fluxfm_sampler_ip.py              # FluxFlowMapSampler + FluxFlowDPS + FluxFlowChef
 ├── fluxfm_sampler_reward.py          # FluxFlowMapSampler + reward ensemble
+├── imagereward_compat.py             # transformers 5.x compat shim for ImageReward
 ├── functions/                        # measurement operators
 ├── utils/                            # image / inpaint / SVD / motion-blur helpers
 ├── flux_two_timestep/                # FLUX two-timestep pipeline + diffusers shim
