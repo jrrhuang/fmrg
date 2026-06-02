@@ -113,7 +113,7 @@ python scripts/generate_geneval.py \
     --output_dir ./results/geneval --start_idx 0 --end_idx 1 --num_samples 1
 ```
 
-512-res reward guidance uses `--grad_checkpointing` to fit within ~48 GB VRAM (e.g. L40S). Bundled aesthetic prompts: `data/artistic_prompts.txt` (canonical figure set) and `data/three_custom_prompts.txt` (eye / NY Flow / gothic-horse).
+512-res reward guidance uses `--grad_checkpointing` to fit within ~48 GB VRAM (e.g. L40S). The aesthetic prompt set is in `data/artistic_prompts.txt`.
 
 ## Recommendations
 
