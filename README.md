@@ -2,7 +2,9 @@
 
 **Authors**: Jerry Y. Huang\*, Justin Lin\*, Sheel Shah, Kartik Nair, Nicholas M. Boffi (Carnegie Mellon University)
 
-### [Paper](https://arxiv.org/abs/2604.27147) | [Project Page](https://flow-map-reward-guidance.github.io/)
+[![arXiv](https://img.shields.io/badge/arXiv-2604.27147-b31b1b.svg)](https://arxiv.org/abs/2604.27147)
+[![ICML 2026](https://img.shields.io/badge/ICML-2026-blue.svg)](https://icml.cc/)
+[![Project Page](https://img.shields.io/badge/Project-Page-green.svg)](https://flow-map-reward-guidance.github.io/)
 
 ![](assets/teaser.png)
 
